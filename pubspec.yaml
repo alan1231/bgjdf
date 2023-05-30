@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_smart_dialog: ^4.9.0+6
   flutter_inappwebview: ^5.7.2+3
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:

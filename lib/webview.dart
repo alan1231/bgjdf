@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'draggable_floating_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -84,10 +85,19 @@ class _WebViewAppState extends State<WebViewApp> {
                           onLoadStart:
                               (InAppWebViewController? controller, Uri? url) {
                             print(url);
+                            if (url?.toString() ==
+                                'https://line.me/R/ti/p/@588win') {
+                              // 在此處執行您想要的操作，例如阻止跳轉或導向其他頁面
+                              controller?.stopLoading();
+                              _launchUrl();
+
+                              // 或者導向其他頁面
+                              // controller?.loadUrl(urlRequest: URLRequest(url: Uri.parse('https://example.com')));
+                            }
                           },
                           onLoadStop:
                               (InAppWebViewController? controller, Uri? url) {
-                            print(url);
+                            // print(url);
                             setState(() {
                               loadstop = true;
                             });
@@ -151,6 +161,12 @@ class _WebViewAppState extends State<WebViewApp> {
         ),
       ],
     ));
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(Uri.parse('line://ti/p/@588win'))) {
+      throw Exception('Could not launch');
+    }
   }
 
   void _showAttach(BuildContext ctx) {
