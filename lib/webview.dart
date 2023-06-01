@@ -25,6 +25,8 @@ class _WebViewAppState extends State<WebViewApp> {
   void initState() {
     SmartDialog.showLoading();
     super.initState();
+    var systemVersion = getSystemVersion();
+    print(systemVersion);
   }
 
   @override
@@ -72,7 +74,7 @@ class _WebViewAppState extends State<WebViewApp> {
                             ),
                             crossPlatform: InAppWebViewOptions(
                                 userAgent: Platform.isIOS
-                                    ? 'Mozilla/5.0 (iPhone; U; iOS 16_4_0; iPhone SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)'
+                                    ? 'Mozilla/5.0 (iPhone; U; iOS ${getSystemVersion()}; iPhone SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)'
                                     : 'Dalvik/2.1.0 (Linux; U; Android 13; Android SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)',
                                 transparentBackground: false,
                                 mediaPlaybackRequiresUserGesture: false,
@@ -89,10 +91,20 @@ class _WebViewAppState extends State<WebViewApp> {
                                 'https://line.me/R/ti/p/@588win') {
                               // 在此處執行您想要的操作，例如阻止跳轉或導向其他頁面
                               controller?.stopLoading();
-                              _launchUrl();
-
-                              // 或者導向其他頁面
-                              // controller?.loadUrl(urlRequest: URLRequest(url: Uri.parse('https://example.com')));
+                              _launchUrl('line://ti/p/@588win');
+                            }
+                            if (url?.toString() ==
+                                'https://direct.lc.chat/9279400/') {
+                              // 在此處執行您想要的操作，例如阻止跳轉或導向其他頁面
+                              controller?.stopLoading();
+                              _launchUrl('https://direct.lc.chat/9279400/');
+                            }
+                            if (url?.toString() ==
+                                'https://instagram.com/gdf99_jdf88?utm_medium=copy_link') {
+                              // 在此處執行您想要的操作，例如阻止跳轉或導向其他頁面
+                              controller?.stopLoading();
+                              _launchUrl(
+                                  'https://instagram.com/gdf99_jdf88?utm_medium=copy_link');
                             }
                           },
                           onLoadStop:
@@ -163,8 +175,25 @@ class _WebViewAppState extends State<WebViewApp> {
     ));
   }
 
-  Future<void> _launchUrl() async {
-    if (!await launchUrl(Uri.parse('line://ti/p/@588win'))) {
+  String getSystemVersion() {
+    var osVersion = Platform.operatingSystemVersion;
+    var versionRegex = RegExp(r'(\d+)\.(\d+)'); // 正则表达式匹配主要版本号和次要版本号
+    var matches = versionRegex.firstMatch(osVersion);
+
+    if (matches != null && matches.groupCount >= 2) {
+      var majorVersion = matches.group(1);
+      var minorVersion = matches.group(2);
+      var patchVersion = '0';
+
+      return '${majorVersion}_${minorVersion}_$patchVersion';
+    }
+
+    return '';
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url),
+        mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch');
     }
   }
