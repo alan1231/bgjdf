@@ -60,30 +60,27 @@ class _WebViewAppState extends State<WebViewApp> {
                         )
                       : Container(),
                   SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: Center(
-                        child: InAppWebView(
-                          initialUrlRequest: URLRequest(
-                              url: Uri.parse('https://gold948.com/')),
-                          initialOptions: InAppWebViewGroupOptions(
-                            android: AndroidInAppWebViewOptions(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: InAppWebView(
+                          initialUrlRequest:
+                              URLRequest(url: WebUri('https://gold948.com/')),
+                          initialSettings: InAppWebViewSettings(
                               useHybridComposition: true,
                               domStorageEnabled: true,
                               databaseEnabled: true,
-                            ),
-                            crossPlatform: InAppWebViewOptions(
-                                userAgent: Platform.isIOS
-                                    ? 'Mozilla/5.0 (iPhone; U; iOS ${getSystemVersion()}; iPhone SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)'
-                                    : 'Dalvik/2.1.0 (Linux; U; Android 13; Android SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)',
-                                transparentBackground: false,
-                                mediaPlaybackRequiresUserGesture: false,
-                                allowUniversalAccessFromFileURLs: true,
-                                javaScriptCanOpenWindowsAutomatically: true,
-                                javaScriptEnabled: true,
-                                preferredContentMode:
-                                    UserPreferredContentMode.MOBILE),
-                          ),
+                              userAgent: Platform.isIOS
+                                  ? 'Mozilla/5.0 (iPhone; U; iOS ${getSystemVersion()}; iPhone SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)'
+                                  : 'Dalvik/2.1.0 (Linux; U; Android 13; Android SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)',
+                              transparentBackground: false,
+                              mediaPlaybackRequiresUserGesture: false,
+                              allowUniversalAccessFromFileURLs: true,
+                              allowsInlineMediaPlayback: true,
+                              javaScriptCanOpenWindowsAutomatically: true,
+                              javaScriptEnabled: true,
+                              preferredContentMode:
+                                  UserPreferredContentMode.MOBILE),
                           onLoadStart:
                               (InAppWebViewController? controller, Uri? url) {
                             print(url);
@@ -120,9 +117,9 @@ class _WebViewAppState extends State<WebViewApp> {
                             webController = controller;
                             setState(() {});
                             SmartDialog.showLoading();
-                          },
-                        ),
-                      )),
+                          }),
+                    ),
+                  ),
                 ],
               ),
             )),
@@ -219,7 +216,7 @@ class _WebViewAppState extends State<WebViewApp> {
                 SmartDialog.showLoading();
                 webController?.loadUrl(
                     urlRequest: URLRequest(
-                  url: Uri.parse('https://gold948.com/'),
+                  url: WebUri('https://gold948.com/'),
                 ));
               },
               isDestructiveAction: true,
