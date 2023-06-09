@@ -71,7 +71,7 @@ class _WebViewAppState extends State<WebViewApp> {
                               domStorageEnabled: true,
                               databaseEnabled: true,
                               userAgent: Platform.isIOS
-                                  ? 'Mozilla/5.0 (iPhone; U; iOS ${getSystemVersion()}; iPhone SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)'
+                                  ? 'Mozilla/5.0 (iPhone; CPU iPhone OS ${getSystemVersion()}like Mac OS X; iPhone SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)'
                                   : 'Dalvik/2.1.0 (Linux; U; Android 13; Android SDK built for x86 Build/RSR1.210210.001.A1; Version_1.0.0)',
                               transparentBackground: false,
                               mediaPlaybackRequiresUserGesture: false,
